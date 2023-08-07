@@ -27,22 +27,24 @@
 
 
             <?php the_content() ?>
+
             <a href="<?php echo get_edit_post_link(); ?>" class="btn btn-primary">Modifier</a>
             <a href="<?php echo get_delete_post_link(); ?>" class="btn btn-danger">Supprimer</a>
 
+
         <?php endwhile; ?>
-        <?php
-        $sports = get_terms([
-            'taxonomy' => 'sport',
-        ]);
-        if ($sports) {
-            echo '<ul class="flex gap-2">';
-            foreach ($sports as $sport) {
-                echo '<li><a class="' . is_tax('sport', $sport->term_id) . '" href="' . get_term_link($sport) . '">' . $sport->name  . '</a></li>';
-            }
-            echo '</ul>';
-        }
-        ?>
+        <!-- <?php
+                $sports = get_terms([
+                    'taxonomy' => 'sport',
+                ]);
+                if ($sports) {
+                    echo '<ul class="flex gap-2">';
+                    foreach ($sports as $sport) {
+                        echo '<li><a class="' . is_tax('sport', $sport->term_id) . '" href="' . get_term_link($sport) . '">' . $sport->name  . '</a></li>';
+                    }
+                    echo '</ul>';
+                }
+                ?> -->
     <?php else : ?>
         <h1>Pas d'article</h1>
     <?php endif; ?>

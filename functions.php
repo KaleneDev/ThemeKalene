@@ -58,6 +58,7 @@ function kaleneTheme_init()
             'menu_icon' => 'dashicons-building',
             'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
             'show_in_rest' => true,
+            'has_archive' => true,
             'labels' => [
                 'name' => 'Biens',
                 'singular_name' => 'Bien',
