@@ -1,6 +1,6 @@
 <?php get_header() ?>
 <?php while (have_posts()) : the_post() ?>
-    <div class="m-8 post flex flex-col gap-2 max-w-7xl m-auto">
+    <div class="m-8 post flex flex-col gap-2 max-w-7xl m-auto p-4">
         <h1 class="text-4xl mb-4 text-center font-bold">
             <?php the_title() ?>
         </h1>
