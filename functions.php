@@ -129,3 +129,42 @@ add_filter('manage_post_posts_custom_column', function ($column, $postId) {
         echo '<div class="bullet bullet-' . $class . '"></div>';
     }
 }, 10, 2);
+
+/**
+ * @param WP_Query $query
+ */
+function kaleneTheme_pre_get_posts($query)
+{
+    if (is_admin() || !is_search() || !$query->is_main_query()) {
+        return;
+    }
+
+    if (get_query_var('sponso') === '1') {
+        $query->set('meta_key', SponsoMetaBox::META_KEY);
+        $query->set('meta_value', '1');
+    }
+}
+function kaleneTheme_query_vars($params)
+{
+    $params[] = 'sponso';
+    return $params;
+}
+
+add_action('pre_get_posts', 'kaleneTheme_pre_get_posts');
+add_filter('query_vars', 'kaleneTheme_query_vars');
+function kaleneTheme_register_widget()
+{
+    register_sidebar(
+        [
+            'id' => 'homepage',
+            'name' => 'Sidebar Accueil',
+            'before_widget' => '<div class="p-4 %2$s" id="%1$s">',
+            'after_widget' => '</div>',
+            'before_title' => '<h4 class="font-bold">',
+            'after_title' => '</h4>',
+            
+        ]
+    );
+}
+
+add_action('widgets_init', 'kaleneTheme_register_widget');
