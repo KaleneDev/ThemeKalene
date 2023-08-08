@@ -1,3 +1,6 @@
+/*!****************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./tailwind.css ***!
+  \****************************************************************/
 /*
 ! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
 */
@@ -1376,3 +1379,18 @@ video {
     padding-right: 2rem;
   }
 }
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/main.scss ***!
+  \*************************************************************************************************************/
+.post h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+.post p {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  margin: 0.5rem 0;
+}
+
+/*# sourceMappingURL=main.css.map*/
