@@ -1,8 +1,8 @@
-<div class="w-full lg:max-w-full lg:flex drop-shadow-md">
+<div class="w-full drop-shadow-md">
     <?php
     if (has_post_thumbnail()) {
     ?>
-        <div class="h-48 lg:h-auto lg:w-72 flex-none bg-cover rounded-t lg:rounded-tr-none lg:rounded-l-2xl text-center overflow-hidden object-cover relative">
+        <div class="h-48 lg:w-full flex-none bg-cover rounded-t text-center overflow-hidden object-cover relative rounded-t-2xl">
             <?php
             $permalink = get_permalink();
 
@@ -12,7 +12,7 @@
         </div>
     <?php } ?>
 
-    <div class="border-r border-b border-l border-gray-300 lg:border-t lg:border-gray-300 bg-white rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 flex flex-col justify-between leading-normal lg:min-w-[400px]">
+    <div class="border-r border-b border-l border-gray-300 bg-white rounded-b-2xl p-4 flex flex-col justify-between leading-normal ">
         <div class="mb-8">
             <div class="text-gray-900 font-bold text-xl mb-2">
                 <a href="<?php the_permalink(); ?>" class="card-link">
