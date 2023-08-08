@@ -37,12 +37,15 @@
                 <a href="<?php the_permalink(); ?>" class="text-indigo-700 font-bold">Voir plus</a>
             <?php endif; ?>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col  items-center justify-between gap-4">
             <div class="flex items-center gap-2">
+            <?php
+                $post_id = get_the_ID();
+                $author_id = get_post_field('post_author', $post_id);
+                $author_avatar_url = get_avatar_url($author_id, array('size' => 96));
 
-                <?php $current_user_avatar_url = get_avatar_url(get_current_user_id(), array('size' => 96));
                 ?>
-                <img class="w-10 h-10 rounded-full mr-4" src="<?php echo $current_user_avatar_url; ?>" alt="Avatar">
+                <img class="w-10 h-10 rounded-full mr-4" src="<?php echo $author_avatar_url; ?>" alt="Avatar">
                 <div class="text-sm">
                     <p class="text-gray-900 leading-none"><?php the_author() ?></p>
                     <p class="text-gray-600"><?php echo get_the_date(); ?></p>
@@ -78,11 +81,11 @@
                 ?>
 
                 <?php if (current_user_can('edit_post', $post_id)) : ?>
-                    <a href="<?php echo get_edit_post_link($post_id); ?>" class="btn btn-primary bg-yellow-400 py-2 px-4 rounded-lg">Modifier</a>
+                    <a href="<?php echo get_edit_post_link($post_id); ?>" class="btn btn-primary bg-yellow-400 py-2 px-4 rounded-lg text-sm">Modifier</a>
                 <?php endif; ?>
 
                 <?php if (current_user_can('delete_post', $post_id)) : ?>
-                    <a href="<?php echo get_delete_post_link($post_id); ?>" class="btn btn-danger bg-red-400 py-2 px-4 rounded-lg">Supprimer</a>
+                    <a href="<?php echo get_delete_post_link($post_id); ?>" class="btn btn-danger bg-red-400 py-2 px-4 rounded-lg text-sm">Supprimer</a>
                 <?php endif; ?>
             </div>
         </div>

@@ -27,6 +27,11 @@
 
 
             <?php the_content() ?>
+            <?php
+            if (comments_open() || get_comments_number()) {
+                comments_template();
+            }
+            ?>
             <h2 class="text-2xl font-bold">Articles relatifs :</h2>
             <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
@@ -51,7 +56,7 @@
             </div>
 
             <div class="flex justify-between my-12">
-            <?php
+                <?php
                 $post_id = get_the_ID();
                 ?>
 

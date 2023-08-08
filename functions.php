@@ -152,8 +152,10 @@ function kaleneTheme_query_vars($params)
 
 add_action('pre_get_posts', 'kaleneTheme_pre_get_posts');
 add_filter('query_vars', 'kaleneTheme_query_vars');
+require_once('widgets/YoutubeWidget.php');
 function kaleneTheme_register_widget()
 {
+    register_widget(YoutubeWidget::class);
     register_sidebar(
         [
             'id' => 'homepage',
@@ -162,9 +164,72 @@ function kaleneTheme_register_widget()
             'after_widget' => '</div>',
             'before_title' => '<h4 class="font-bold">',
             'after_title' => '</h4>',
-            
+
         ]
     );
 }
 
 add_action('widgets_init', 'kaleneTheme_register_widget');
+
+
+add_filter('comment_form_defaults', function ($args) {
+    $args['fields']['email'] = <<<HTML
+    <div class="flex flex-col mb-4">
+        <label for="email" class="text-sm mb-2">Email*</label>
+        <input type="email" name="email" id="email" class="border border-gray-400 p-2 rounded">
+    </div>
+HTML;
+
+    return $args;
+});
+add_filter('comment_form_defaults', function ($args) {
+    $args['fields']['author'] = <<<HTML
+    <div class="flex flex-col mb-4">
+        <label for="author" class="text-sm mb-2">Nom*</label>
+        <input type="text" name="author" id="author" class="border border-gray-400 p-2 rounded">
+    </div>
+HTML;
+
+    return $args;
+});
+
+add_filter('comment_form_defaults', function ($args) {
+    $args['comment_field'] = <<<HTML
+    <div class="flex flex-col mb-4">
+        <label for="comment" class="text-sm mb-2">Commentaire*</label>
+        <textarea cols="50" name="comment" id="comment" class="border border-gray-400 p-2 rounded h-48"></textarea>
+    </div>
+HTML;
+
+    return $args;
+});
+
+add_filter('comment_form_defaults', function ($args) {
+    $args['submit_button'] = <<<HTML
+    <div class="flex flex-col mb-4">
+        <input type="submit" value="Envoyer" class="bg-blue-500 text-white p-2 rounded">
+    </div>
+HTML;
+
+    return $args;
+});
+add_filter('comment_form_defaults', function ($args) {
+    $args['class_form'] = 'flex flex-col mb-4';
+    return $args;
+});
+// je veux personnaliser les commentaires
+add_filter('comment_form_defaults', function ($args) {
+    $args['title_reply'] = 'Laisser un commentaire';
+    return $args;
+});
+add_filter('comment_class', function ($args) {
+    $args[] = 'bg-gray-100 p-2 rounded list-none';
+    return $args;
+
+});
+add_filter('comment_text', function ($comment_text,) {
+    // Personnalisez le format du texte de commentaire comme vous le souhaitez
+    $comment_text = '<div class="bg-gray-100 p-2 rounded">' . $comment_text . '</div>';
+
+    return $comment_text;
+}, 10, 2);

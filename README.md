@@ -10,7 +10,10 @@ Découvrez notre site WordPress immobilier, propulsé par Webpack et habillé av
 2. Ajout simple de biens pour les administrateurs.
 3. Gestion utilisateur robuste avec niveaux de droits.
 4. Recherche aisée par catégorie pour des résultats précis.
-5. (d'autres à venir)
+5. Ajout de Widgets
+5. Personnalisation de la side
+6. Ajouter des commentaire
+7. (d'autres à venir)
 
 ## Technologies utilisées
 
