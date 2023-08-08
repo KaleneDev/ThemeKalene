@@ -1,0 +1,1 @@
+jQuery(".kaleneTheme_datpicker").flatpickr({});

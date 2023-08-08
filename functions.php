@@ -9,8 +9,9 @@ function kaleneTheme_support()
 }
 function kaleneTheme_register_assets()
 {
-    wp_enqueue_script('main-script', get_template_directory_uri() . '/assets/main.min.js', [], false, true);
-    wp_enqueue_style('main-styles', get_template_directory_uri() . '/assets/main.css');
+    wp_enqueue_script('main-script', get_template_directory_uri() . '/dist/main.min.js', [], false, true);
+    wp_enqueue_style('main-styles', get_template_directory_uri() . '/dist/main.css');
+    wp_enqueue_style('main-styles', get_template_directory_uri() . '/src/scss/main.scss');
 }
 function kaleneTheme_title_separator()
 {
@@ -77,5 +78,54 @@ add_action('wp_enqueue_scripts', 'kaleneTheme_register_assets');
 add_action('after_setup_theme', 'kaleneTheme_support');
 add_filter('document_title_separator', 'kaleneTheme_title_separator');
 require_once('metaboxes/sponso.php');
-SponsoMetaBox::register();
+require_once('option/agence.php');
 add_action('init', 'kaleneTheme_init');
+SponsoMetaBox::register();
+AgenceMenuPage::register();
+
+add_filter('manage_bien_posts_columns', function ($columns) {
+    return [
+        'cb' => $columns['cb'],
+        'title' => $columns['title'],
+        'thumbnail' => 'Image',
+        'price' => 'Prix',
+        'city' => 'Ville',
+        'date' => $columns['date'],
+    ];
+});
+add_filter('manage_bien_posts_custom_column', function ($column, $postId) {
+    if ($column === 'thumbnail') {
+        the_post_thumbnail('thumbnail', $postId);
+    }
+    if ($column === 'price') {
+        echo get_post_meta($postId, '_bien_price', true);
+    }
+    if ($column === 'city') {
+        echo get_post_meta($postId, '_bien_city', true);
+    }
+}, 10, 2);
+add_action('admin_enqueue_scripts', function () {
+    wp_enqueue_style('agence-admin', get_template_directory_uri() . '/assets/agence-admin.css');
+});
+
+add_filter('manage_post_posts_columns', function ($columns) {
+    $newColumns = [];
+    foreach ($columns as $k => $v) {
+        if ($k === 'date') {
+            $newColumns['sponso'] = 'Article sponsorisé ?';
+        }
+        $newColumns[$k] = $v;
+    }
+    return $newColumns;
+});
+add_filter('manage_post_posts_custom_column', function ($column, $postId) {
+    if ($column === 'sponso') {
+        $sponso = get_post_meta($postId, SponsoMetaBox::META_KEY, true);
+        if ($sponso === '1') {
+            $class = 'yes';
+        } else {
+            $class = 'no';
+        }
+        echo '<div class="bullet bullet-' . $class . '"></div>';
+    }
+}, 10, 2);

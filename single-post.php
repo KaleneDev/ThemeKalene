@@ -27,22 +27,62 @@
 
 
             <?php the_content() ?>
-            <a href="<?php echo get_edit_post_link(); ?>" class="btn btn-primary">Modifier</a>
-            <a href="<?php echo get_delete_post_link(); ?>" class="btn btn-danger">Supprimer</a>
+            <h2 class="text-2xl font-bold">Articles relatifs :</h2>
+            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+                <?php $query = new WP_Query([
+                    'post__not_in' => [get_the_ID()],
+                    'post_type' => 'post',
+                    'posts_per_page' => 3,
+                    'orderby' => 'rand',
+                    'tax_query' => [
+                        [
+                            'taxonomy' => 'sport',
+                            'field' => 'slug',
+                            'terms' => wp_get_post_terms(get_the_ID(), 'sport', ['fields' => 'slugs'])
+                        ]
+                    ]
+                ]);
+                while ($query->have_posts()) : $query->the_post(); ?>
+                    <?php get_template_part('template-parts/post-relatif', 'post'); ?>
+                <?php endwhile; ?>
+                <?php wp_reset_postdata();
+                ?>
+            </div>
+
+            <div class="flex justify-between my-12">
+            <?php
+                $post_id = get_the_ID();
+                ?>
+
+                <?php if (current_user_can('edit_post', $post_id)) : ?>
+                    <a href="<?php echo get_edit_post_link($post_id); ?>" class="btn btn-primary bg-yellow-400 py-2 px-4 rounded-lg">Modifier</a>
+                <?php endif; ?>
+
+                <?php if (current_user_can('delete_post', $post_id)) : ?>
+                    <a href="<?php echo get_delete_post_link($post_id); ?>" class="btn btn-danger bg-red-400 py-2 px-4 rounded-lg">Supprimer</a>
+                <?php endif; ?>
+            </div>
 
         <?php endwhile; ?>
-        <?php
-        $sports = get_terms([
-            'taxonomy' => 'sport',
-        ]);
-        if ($sports) {
-            echo '<ul class="flex gap-2">';
-            foreach ($sports as $sport) {
-                echo '<li><a class="' . is_tax('sport', $sport->term_id) . '" href="' . get_term_link($sport) . '">' . $sport->name  . '</a></li>';
+        <div class="flex items-center gap-2">
+            <p class="text-lg">
+                Tags :
+            </p>
+            <?php
+            $sports = get_terms([
+                'taxonomy' => 'sport',
+            ]);
+            if ($sports) {
+                echo '<ul class="flex gap-2">';
+                foreach ($sports as $sport) {
+                    $active_class = is_tax('sport', $sport->term_id) ? 'bg-sky-300 py-1 px-2 rounded-xl' : '';
+                    echo '<li><a class="text-lg ' . $active_class  . '" href="' . get_term_link($sport) . '">' . $sport->name  . '</a></li>';
+                }
+                echo '</ul>';
             }
-            echo '</ul>';
-        }
-        ?>
+            ?>
+        </div>
     <?php else : ?>
         <h1>Pas d'article</h1>
     <?php endif; ?>
