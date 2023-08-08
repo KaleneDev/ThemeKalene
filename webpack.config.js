@@ -9,7 +9,7 @@ const config = {
         main: ["./src/js/main.js", "./src/scss/main.scss"],
     },
     output: {
-        path: path.resolve(__dirname, "assets"),
+        path: path.resolve(__dirname, "dist"),
         filename: "[name].min.js",
         clean: true,
     },
@@ -49,7 +49,7 @@ const config = {
         new MiniCssExtractPlugin(),
         new BrowserSyncPlugin({
             proxy: "http://localhost:8888/Immobilier/", // Remplacez "path-to-your-wordpress-site" par le chemin de votre site WordPress local
-            files: ["**/*.php", "**/*.css", "**/*.scss"], // Surveillez les fichiers PHP et CSS pour le rechargement automatique
+            files: ["**/*.php", "**/*.css", "**/*.scss", "**/*.js"], // Surveillez les fichiers PHP et CSS pour le rechargement automatique
             reloadDebounce: 0, // Délai de rechargement automatique après les modifications (en millisecondes)
         }),
     ],
