@@ -294,7 +294,6 @@ function create_custom_profile_page()
         $profile_page_id = wp_insert_post(array(
             'post_title'     => 'Profil Utilisateur',
             'post_name'      => 'profile',
-            'post_content'   => '[profile_page_content]',
             'post_status'    => 'publish',
             'post_type'      => 'page',
             'comment_status' => 'closed',
