@@ -1,9 +1,13 @@
 <?php
+require_once('metaboxes/sponso.php');
+require_once('option/agence.php');
+require_once('option/cron.php');
 function kaleneTheme_support()
 {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('menus');
+    add_theme_support('html5', ['comment-list', 'comment-form', 'search-form']);
     register_nav_menu('header', 'En tête du menu');
     register_nav_menu('footer', 'Pied de page');
 }
@@ -77,8 +81,7 @@ function kaleneTheme_init()
 add_action('wp_enqueue_scripts', 'kaleneTheme_register_assets');
 add_action('after_setup_theme', 'kaleneTheme_support');
 add_filter('document_title_separator', 'kaleneTheme_title_separator');
-require_once('metaboxes/sponso.php');
-require_once('option/agence.php');
+
 add_action('init', 'kaleneTheme_init');
 SponsoMetaBox::register();
 AgenceMenuPage::register();
@@ -156,10 +159,11 @@ require_once('widgets/YoutubeWidget.php');
 function kaleneTheme_register_widget()
 {
     register_widget(YoutubeWidget::class);
+
     register_sidebar(
         [
             'id' => 'homepage',
-            'name' => 'Sidebar Accueil',
+            'name' => __('Sidebar Accueil', 'kaleneTheme'),
             'before_widget' => '<div class="p-4 %2$s" id="%1$s">',
             'after_widget' => '</div>',
             'before_title' => '<h4 class="font-bold">',
@@ -225,7 +229,6 @@ add_filter('comment_form_defaults', function ($args) {
 add_filter('comment_class', function ($args) {
     $args[] = 'bg-gray-100 p-2 rounded list-none';
     return $args;
-
 });
 add_filter('comment_text', function ($comment_text,) {
     // Personnalisez le format du texte de commentaire comme vous le souhaitez
@@ -233,3 +236,84 @@ add_filter('comment_text', function ($comment_text,) {
 
     return $comment_text;
 }, 10, 2);
+add_action('after_setup_theme', function () {
+    load_theme_textdomain('kaleneTheme', get_template_directory() . '/languages');
+});
+
+function custom_logout_redirect()
+{
+    wp_redirect(home_url()); // Rediriger vers la page d'accueil après la déconnexion
+    exit();
+}
+
+add_action('wp_logout', 'custom_logout_redirect');
+add_filter('login_display_language_dropdown', '__return_false');
+
+function custom_login_redirect($user)
+{
+    $user_roles = $user->roles;
+    var_dump($user_roles);
+    if (is_array($user_roles) && in_array('subscriber', $user_roles)) {
+        return home_url('/');
+    } else {
+        var_dump($user_roles);
+        return home_url('/wp-admin');
+    }
+}
+add_filter('login_redirect', 'custom_login_redirect', 10, 3);
+
+function custom_login()
+{
+    echo '<link rel="stylesheet" type="text/css" href="' . get_template_directory_uri() . '/dist/main.css" />';
+}
+add_action('login_head', 'custom_login');
+
+
+function custom_login_logo()
+{
+    $custom_logo_url = '/src/img/logo.svg';
+
+    echo '<style type="text/css">
+        .login h1 a {
+            background-image: url(' . get_template_directory_uri() . $custom_logo_url . ') !important;
+            background-size: contain !important;
+            width: auto !important;
+        }
+    </style>';
+}
+
+add_action('login_head', 'custom_login_logo');
+
+function create_custom_profile_page()
+{
+    // Vérifier si la page de profil existe déjà parmi les pages existantes
+    $profile_page = get_page_by_path('profile');
+
+    if (!$profile_page) {
+        // Créer la page de profil
+        $profile_page_id = wp_insert_post(array(
+            'post_title'     => 'Profil Utilisateur',
+            'post_name'      => 'profile',
+            'post_content'   => '[profile_page_content]',
+            'post_status'    => 'publish',
+            'post_type'      => 'page',
+            'comment_status' => 'closed',
+        ));
+
+        // Ne modifie pas les paramètres de la page d'accueil
+        if (!get_option('page_on_front')) {
+            update_option('page_on_front', $profile_page_id);
+            update_option('show_on_front', 'page');
+        }
+    }
+}
+
+// Exécuter la création de la page lors de l'activation du thème
+add_action('after_switch_theme', 'create_custom_profile_page');
+function use_custom_profile_template($template) {
+    if (is_page('profile')) {
+        $template = get_stylesheet_directory() . '/template-parts/profile.php';
+    }
+    return $template;
+}
+add_filter('template_include', 'use_custom_profile_template');

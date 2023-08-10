@@ -1,9 +1,10 @@
 <?php
+
 $count = absint(get_comments_number());
 ?>
 
 <?php if ($count > 0) : ?>
-    <h2><?= $count ?> Commentaire<?= $count > 1 ? 's' : '' ?></h2>
+    <h2><?= sprintf(_n('%s Commantaire', '%s Commantaires', $count, 'kaleneTheme'), $count) ?></h2>
 <?php else : ?>
     <h2>Laisser un commentaire</h2>
 <?php endif; ?>
@@ -13,4 +14,15 @@ $count = absint(get_comments_number());
 <?php else : ?>
     <p>Les commentaires sont fermés</p>
 <?php endif; ?>
-<?php  wp_list_comments(); ?>
+
+<?php
+
+wp_list_comments(
+    ['style' => 'div']
+);
+?>
+<div>
+    <?php
+    paginate_comments_links('per_page=5');
+    ?>
+</div>
