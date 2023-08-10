@@ -6,11 +6,14 @@ Découvrez notre site WordPress immobilier, propulsé par Webpack et habillé av
 
 ## Fonctionnalités
 
-1. Recherche avancée pour filtrer les propriétés. (en cours)
-2. Ajout simple de biens pour les administrateurs.
-3. Gestion utilisateur robuste avec niveaux de droits.
-4. Recherche aisée par catégorie pour des résultats précis.
-5. (d'autres à venir)
+1. Inscription et connexion des utilisateurs.
+2. Mise en place d'une recherche avancée pour filtrer les propriétés (en cours).
+3. Ajout facile de biens pour les administrateurs.
+4. Gestion robuste des utilisateurs avec des niveaux de droits.
+5. Recherche aisée par catégorie pour des résultats précis.
+6. Intégration de widgets.
+7. Possibilité d'ajouter des commentaires.
+8. (d'autres à venir)
 
 ## Technologies utilisées
 

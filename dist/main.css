@@ -1783,4 +1783,11 @@ video {
   background-color: #ccc;
 }
 
+.login form {
+  border-radius: 10px;
+}
+.login .button {
+  border-radius: 10px;
+}
+
 /*# sourceMappingURL=main.css.map*/
