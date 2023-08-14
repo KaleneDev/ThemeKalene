@@ -15,7 +15,6 @@ function kaleneTheme_register_assets()
 {
     wp_enqueue_script('main-script', get_template_directory_uri() . '/dist/main.min.js', [], false, true);
     wp_enqueue_style('main-styles', get_template_directory_uri() . '/dist/main.css');
-    wp_enqueue_style('main-styles', get_template_directory_uri() . '/src/scss/main.scss');
 }
 function kaleneTheme_title_separator()
 {
