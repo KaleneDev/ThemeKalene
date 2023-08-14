@@ -155,26 +155,6 @@ function kaleneTheme_query_vars($params)
 
 add_action('pre_get_posts', 'kaleneTheme_pre_get_posts');
 add_filter('query_vars', 'kaleneTheme_query_vars');
-require_once('widgets/YoutubeWidget.php');
-function kaleneTheme_register_widget()
-{
-    register_widget(YoutubeWidget::class);
-
-    register_sidebar(
-        [
-            'id' => 'homepage',
-            'name' => __('Sidebar Accueil', 'kaleneTheme'),
-            'before_widget' => '<div class="p-4 %2$s" id="%1$s">',
-            'after_widget' => '</div>',
-            'before_title' => '<h4 class="font-bold">',
-            'after_title' => '</h4>',
-
-        ]
-    );
-}
-
-add_action('widgets_init', 'kaleneTheme_register_widget');
-
 
 add_filter('comment_form_defaults', function ($args) {
     $args['fields']['email'] = <<<HTML
