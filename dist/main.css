@@ -1796,4 +1796,10 @@ video {
   border-radius: 10px;
 }
 
+@media (min-width: 640px) {
+  .sm\:flex {
+    display: flex;
+  }
+}
+
 /*# sourceMappingURL=main.css.map*/
