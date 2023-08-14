@@ -41,7 +41,9 @@ session_start();
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex flex-shrink-0 items-center">
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=300" alt="Your Company">
+                        <a href=<?= home_url('/') ?>>
+                            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=300" alt="Your Company">
+                        </a>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex m-auto justify-between w-full">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
