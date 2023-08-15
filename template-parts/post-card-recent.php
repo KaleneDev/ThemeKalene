@@ -27,7 +27,7 @@
                         the_excerpt();
                     } else {
                         $content = get_the_content();
-                        $trimmed_content = wp_trim_words($content, 100, '...');
+                        $trimmed_content = wp_trim_words($content, 50, '...');
                         echo $trimmed_content;
                     }
                     ?></p>

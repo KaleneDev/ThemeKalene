@@ -73,10 +73,10 @@ session_start();
                                     <img class="h-8 w-8 rounded-full" src="<?php echo $current_user_avatar_url; ?>" alt="">
                                 </button>
                             </div>
-                            <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transform opacity-0 scale-95" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <div class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transform opacity-0 scale-95" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
                                 <a href="<?= home_url('/profile/') ?>" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Votre Profil</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Paramètres</a>
+                                <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Paramètres</a> -->
                                 <a href="<?= wp_logout_url() ?>" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Se déconnecter</a>
 
                             </div>
@@ -145,12 +145,12 @@ session_start();
         // Fonction pour ouvrir le menu de profil
         function openUserMenu() {
             userMenu.classList.add('transition', 'ease-out', 'duration-100', 'opacity-100', 'scale-100');
-            userMenu.classList.remove('ease-in', 'duration-75', 'opacity-0', 'scale-95');
+            userMenu.classList.remove('hidden','ease-in', 'duration-75', 'opacity-0', 'scale-95');
         }
 
         // Fonction pour fermer le menu de profil
         function closeUserMenu() {
-            userMenu.classList.add('transition', 'ease-in', 'duration-75', 'opacity-0', 'scale-95');
+            userMenu.classList.add('hidden','transition', 'ease-in', 'duration-75', 'opacity-0', 'scale-95');
             userMenu.classList.remove('ease-out', 'duration-100', 'opacity-100', 'scale-100');
         }
 

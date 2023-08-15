@@ -228,16 +228,19 @@ function custom_logout_redirect()
 add_action('wp_logout', 'custom_logout_redirect');
 add_filter('login_display_language_dropdown', '__return_false');
 
-function custom_login_redirect($user)
-{
-    $user_roles = $user->roles;
-    if (is_array($user_roles) && in_array('subscriber', $user_roles)) {
-        return home_url('/');
-    } else {
-        return home_url('/wp-admin');
-    }
-}
-add_filter('login_redirect', 'custom_login_redirect', 10, 3);
+// function custom_login_redirect($redirect_to, $user)
+// {
+//     if (is_a($user, 'WP_User')) {
+//         $user_roles = $user->roles;
+//         if (in_array('subscriber', $user_roles)) {
+//             return home_url('/');
+//         } else {
+//             return home_url('/wp-admin');
+//         }
+//     }
+//     return $redirect_to;
+// }
+// add_filter('login_redirect', 'custom_login_redirect', 10, 3);
 
 function custom_login()
 {
@@ -286,10 +289,41 @@ function create_custom_profile_page()
 
 // Exécuter la création de la page lors de l'activation du thème
 add_action('after_switch_theme', 'create_custom_profile_page');
-function use_custom_profile_template($template) {
+function use_custom_profile_template($template)
+{
     if (is_page('profile')) {
         $template = get_stylesheet_directory() . '/template-parts/profile.php';
     }
     return $template;
 }
 add_filter('template_include', 'use_custom_profile_template');
+
+
+// Ajouter un champ numéro de téléphone dans le profil utilisateur
+function custom_user_profile_fields($user)
+{
+?>
+    <h3><?php _e('Informations de l\'utilisateur', 'kaleneTheme'); ?></h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="user_phone"><?php _e('Numéro de téléphone', 'kaleneTheme'); ?></label></th>
+            <td>
+                <input type="tel" name="user_phone" id="user_phone" value="<?php echo esc_attr(get_the_author_meta('user_phone', $user->ID)); ?>" class="regular-text" />
+                <p class="description"><?php _e('Entrez votre numéro de téléphone.', 'kaleneTheme'); ?></p>
+            </td>
+        </tr>
+    </table>
+<?php
+}
+add_action('show_user_profile', 'custom_user_profile_fields');
+add_action('edit_user_profile', 'custom_user_profile_fields');
+
+// Enregistrer le champ numéro de téléphone
+function save_custom_user_profile_fields($user_id)
+{
+    if (current_user_can('edit_user', $user_id)) {
+        update_user_meta($user_id, 'user_phone', sanitize_text_field($_POST['user_phone']));
+    }
+}
+add_action('personal_options_update', 'save_custom_user_profile_fields');
+add_action('edit_user_profile_update', 'save_custom_user_profile_fields');

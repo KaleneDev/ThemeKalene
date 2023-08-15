@@ -18,11 +18,11 @@ $count = absint(get_comments_number());
 <?php
 
 wp_list_comments(
-    ['style' => 'div']
+    ['style' => 'div', 'reverse_top_level' => true]
 );
 ?>
 <div>
     <?php
-    paginate_comments_links('per_page=5');
+    paginate_comments_links();
     ?>
 </div>

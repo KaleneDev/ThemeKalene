@@ -28,8 +28,19 @@
 
             <?php the_content() ?>
 
-            <a href="<?php echo get_edit_post_link(); ?>" class="btn btn-primary">Modifier</a>
-            <a href="<?php echo get_delete_post_link(); ?>" class="btn btn-danger">Supprimer</a>
+            <div class="flex justify-between my-12">
+                <?php
+                $post_id = get_the_ID();
+                ?>
+
+                <?php if (current_user_can('edit_post', $post_id)) : ?>
+                    <a href="<?php echo get_edit_post_link($post_id); ?>" class="btn btn-primary bg-yellow-400 py-2 px-4 rounded-lg">Modifier</a>
+                <?php endif; ?>
+
+                <?php if (current_user_can('delete_post', $post_id)) : ?>
+                    <a href="<?php echo get_delete_post_link($post_id); ?>" class="btn btn-danger bg-red-400 py-2 px-4 rounded-lg">Supprimer</a>
+                <?php endif; ?>
+            </div>
 
 
         <?php endwhile; ?>
