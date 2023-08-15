@@ -231,11 +231,9 @@ add_filter('login_display_language_dropdown', '__return_false');
 function custom_login_redirect($user)
 {
     $user_roles = $user->roles;
-    var_dump($user_roles);
     if (is_array($user_roles) && in_array('subscriber', $user_roles)) {
         return home_url('/');
     } else {
-        var_dump($user_roles);
         return home_url('/wp-admin');
     }
 }
