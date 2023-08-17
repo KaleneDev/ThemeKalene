@@ -1,5 +1,6 @@
 <?php
 require_once('metaboxes/sponso.php');
+require_once('metaboxes/bien.php');
 require_once('option/agence.php');
 require_once('option/cron.php');
 function kaleneTheme_support()
@@ -84,6 +85,7 @@ add_filter('document_title_separator', 'kaleneTheme_title_separator');
 add_action('init', 'kaleneTheme_init');
 SponsoMetaBox::register();
 AgenceMenuPage::register();
+BienMetaBox::register();
 
 add_filter('manage_bien_posts_columns', function ($columns) {
     return [
@@ -99,8 +101,8 @@ add_filter('manage_bien_posts_custom_column', function ($column, $postId) {
     if ($column === 'thumbnail') {
         the_post_thumbnail('thumbnail', $postId);
     }
-    if ($column === 'price') {
-        echo get_post_meta($postId, '_bien_price', true);
+    if ($column === 'price' && ($price = get_post_meta($postId, BienMetaBox::META_KEY, true))) {
+        echo get_post_meta($postId, BienMetaBox::META_KEY, true) . ' €';
     }
     if ($column === 'city') {
         echo get_post_meta($postId, '_bien_city', true);

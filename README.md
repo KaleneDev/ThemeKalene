@@ -43,3 +43,5 @@ Avant de commencer, assurez-vous d'avoir installé Node.js et npm sur votre syst
 1. Pour développer le site, utilisez la commande suivante pour lancer le mode de développement avec surveillance des fichiers : `npm run dev`
 3. Ouvrez votre navigateur web et accédez à `http://localhost:3000/Immobilier/`. Vous serez redirigé vers la page d'accueil du site.
 4. Pour construire le site en mode développement ou production, utilisez l'une des commandes suivantes en fonction de vos besoins : `npm run build-dev` `npm run build-prod`
+
+Voir le siteWeb : https://www.immobilier.kalene-apiou.com/
